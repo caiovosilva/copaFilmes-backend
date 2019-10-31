@@ -11,5 +11,10 @@ namespace LambdaCopaFilmesWebAPI.Domain.Models
         public string Titulo { get; set; }
         public int Ano { get; set; }
         public Double Nota { get; set; }
+
+        public static implicit operator List<object>(Movie v)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

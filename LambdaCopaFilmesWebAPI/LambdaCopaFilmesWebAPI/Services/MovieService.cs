@@ -5,8 +5,9 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using LambdaCopaFilmesWebAPI.Domain.Models;
+using LambdaCopaFilmesWebAPI.Domain.Services;
 
-namespace LambdaCopaFilmesWebAPI.Domain.Services
+namespace LambdaCopaFilmesWebAPI.Services
 {
     public class MovieService : IMovieService
     {
@@ -14,7 +15,7 @@ namespace LambdaCopaFilmesWebAPI.Domain.Services
 
         public MovieService()
         {
-            client.BaseAddress = new Uri("http://copafilmes.azurewebsites.net/api/filmes");
+            client.BaseAddress = new Uri("http://copafilmes.azurewebsites.net/api/");
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(
                 new MediaTypeWithQualityHeaderValue("application/json"));
@@ -22,15 +23,14 @@ namespace LambdaCopaFilmesWebAPI.Domain.Services
 
         public async Task<IEnumerable<Movie>> ListAsync()
         {
-            List<Movie> lista = new List<Movie>();
-            lista.Add(new Movie());
+            List<Movie> movies = new List<Movie>();
 
-            HttpResponseMessage response = await client.GetAsync();
+            HttpResponseMessage response = await client.GetAsync("filmes");
             if (response.IsSuccessStatusCode)
             {
-                product = await response.Content.ReadAsAsync<Product>();
+                movies = await response.Content.ReadAsAsync<List<Movie>>();
             }
-            return product;
+            return movies;
         }
     }
 }
