@@ -28,11 +28,15 @@ namespace LambdaCopaFilmesWebAPI.Controllers
         //}
 
         [HttpGet]
-        public async Task<IEnumerable<Movie>> GetChampionshipAsync([FromBody] Movies movies)
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult<IEnumerable<Movie>>> GetChampionshipAsync([FromBody] Movie[] movies)
         {
             Console.Write(movies);
-            var result = await this.movieService.ListAsync();
-            return result;
+            if (movies.Length != 8)
+                return BadRequest();
+            var result = await this.movieService.RunChampionshipAsync(movies);
+            return movies;
         }
     }
 }

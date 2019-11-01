@@ -8,6 +8,6 @@ namespace LambdaCopaFilmesWebAPI.Domain.Services
     {
         Task<IEnumerable<Movie>> ListAsync();
 
-        Task<IEnumerable<Movie>> RunChampionshipAsync(string[] moviesIds);
+        Task<IEnumerable<Movie>> RunChampionshipAsync(Movie[] movies);
     }
 }

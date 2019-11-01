@@ -33,7 +33,7 @@ namespace LambdaCopaFilmesWebAPI.Services
             return movies;
         }
 
-        public Task<IEnumerable<Movie>> RunChampionshipAsync(string[] moviesIds)
+        public Task<IEnumerable<Movie>> RunChampionshipAsync(Movie[] movies)
         {
             return ListAsync();
 
