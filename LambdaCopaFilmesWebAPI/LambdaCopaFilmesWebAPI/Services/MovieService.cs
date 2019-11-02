@@ -11,11 +11,12 @@ namespace LambdaCopaFilmesWebAPI.Services
 {
     public class MovieService : IMovieService
     {
-        public IEnumerable<Movie> RunChampionshipAsync(Movie[] movies)
+        public IEnumerable<Movie> RunChampionship(List<Movie> movies)
         {
-            int j = movies.Length - 1;
-            Movie[] moviesArray = new Movie[movies.Length / 2];
-            for (int i = 0; i < movies.Length / 2; i++)
+            movies = movies.OrderBy(x => x.Titulo).ToList();
+            int j = movies.Count - 1;
+            Movie[] moviesArray = new Movie[4];
+            for (int i = 0; i < 4; i++)
             {
                 moviesArray[i] = Movie.Greater(movies[i], movies[j]);
                 j--;

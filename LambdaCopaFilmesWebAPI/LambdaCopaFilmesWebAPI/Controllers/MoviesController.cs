@@ -23,12 +23,11 @@ namespace LambdaCopaFilmesWebAPI.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public ActionResult<IEnumerable<Movie>> RunChampionship([FromBody] Movie[] movies)
+        public ActionResult<IEnumerable<Movie>> RunChampionship([FromBody] List<Movie> movies)
         {
-            Console.Write(movies);
-            if (movies.Length != 8)
+            if (movies.Count != 8)
                 return BadRequest();
-            var result = this.movieService.RunChampionshipAsync(movies);
+            var result = this.movieService.RunChampionship(movies);
             return Ok(result);
         }
     }
