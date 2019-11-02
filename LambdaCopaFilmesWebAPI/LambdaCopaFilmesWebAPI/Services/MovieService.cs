@@ -11,33 +11,29 @@ namespace LambdaCopaFilmesWebAPI.Services
 {
     public class MovieService : IMovieService
     {
-        private readonly HttpClient client = new HttpClient();
-
-        public MovieService()
+        public IEnumerable<Movie> RunChampionshipAsync(Movie[] movies)
         {
-            client.BaseAddress = new Uri("http://copafilmes.azurewebsites.net/api/");
-            client.DefaultRequestHeaders.Accept.Clear();
-            client.DefaultRequestHeaders.Accept.Add(
-                new MediaTypeWithQualityHeaderValue("application/json"));
-        }
-
-        public async Task<IEnumerable<Movie>> ListAsync()
-        {
-            List<Movie> movies = new List<Movie>();
-
-            HttpResponseMessage response = await client.GetAsync("filmes");
-            if (response.IsSuccessStatusCode)
+            int j = movies.Length - 1;
+            Movie[] moviesArray = new Movie[movies.Length / 2];
+            for (int i = 0; i < movies.Length / 2; i++)
             {
-                movies = await response.Content.ReadAsAsync<List<Movie>>();
+                moviesArray[i] = Movie.Greater(movies[i], movies[j]);
+                j--;
             }
-            return movies;
-        }
 
-        public Task<IEnumerable<Movie>> RunChampionshipAsync(Movie[] movies)
-        {
-            return ListAsync();
+            moviesArray = new Movie[2]
+            {
+                Movie.Greater(moviesArray[0], moviesArray[1]),
+                Movie.Greater(moviesArray[2], moviesArray[3])
+            };
 
-
+            if(Movie.Greater(moviesArray[0], moviesArray[1]).Id.Equals(moviesArray[1].Id))
+            {
+                Movie movie = moviesArray[0];
+                moviesArray[0] = moviesArray[1];
+                moviesArray[1] = movie;
+            }
+            return moviesArray;
         }
     }
 }
