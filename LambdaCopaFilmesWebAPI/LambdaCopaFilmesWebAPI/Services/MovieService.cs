@@ -11,6 +11,28 @@ namespace LambdaCopaFilmesWebAPI.Services
 {
     public class MovieService : IMovieService
     {
+        private readonly HttpClient client = new HttpClient();
+
+        public MovieService()
+        {
+            client.BaseAddress = new Uri("http://copafilmes.azurewebsites.net/api/");
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(
+                new MediaTypeWithQualityHeaderValue("application/json"));
+        }
+
+        public async Task<IEnumerable<Movie>> GetMoviesAsync()
+        {
+            List<Movie> movies = new List<Movie>();
+
+            HttpResponseMessage response = await client.GetAsync("filmes");
+            if (response.IsSuccessStatusCode)
+            {
+                movies = await response.Content.ReadAsAsync<List<Movie>>();
+            }
+            return movies;
+        }
+
         public IEnumerable<Movie> RunChampionship(List<Movie> movies)
         {
             movies = movies.OrderBy(x => x.Titulo).ToList();

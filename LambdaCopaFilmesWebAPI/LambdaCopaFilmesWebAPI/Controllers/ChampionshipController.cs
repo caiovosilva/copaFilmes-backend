@@ -12,21 +12,25 @@ namespace LambdaCopaFilmesWebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class MoviesController : ControllerBase
+    public class ChampionshipController : ControllerBase
     {
         private readonly IMovieService movieService;
 
-        public MoviesController(IMovieService movieService)
+        public ChampionshipController(IMovieService movieService)
         {
             this.movieService = movieService;
         }
 
-        [HttpGet]
+        [HttpPost]
         [EnableCors("AllowAnyOrigin")]
-        public async Task <IEnumerable<Movie>> GetAllMoviesAsync()
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public ActionResult<IEnumerable<Movie>> RunChampionship([FromBody] List<Movie> movies)
         {
-            var result = await this.movieService.GetMoviesAsync();
-            return result;
+            if (movies.Count != 8)
+                return BadRequest();
+            var result = this.movieService.RunChampionship(movies);
+            return Ok(result);
         }
     }
 }
