@@ -27,15 +27,12 @@ namespace LambdaCopaFilmesWebAPI
         // This method gets called by the runtime. Use this method to add services to the container
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             // Add S3 to the ASP.NET Core dependency injection framework.
             services.AddAWSService<Amazon.S3.IAmazonS3>();
             services.AddSingleton<IMovieService, MovieService>();
-            services.AddCors(options =>
-            {
-                options.AddPolicy("AllowAnyOrigin", builder => builder.AllowAnyOrigin());
-            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline
@@ -51,8 +48,10 @@ namespace LambdaCopaFilmesWebAPI
             }
 
             app.UseHttpsRedirection();
+            app.UseCors(
+                options => options.WithOrigins("https://copa-filmes.netlify.com/").AllowAnyMethod().AllowAnyHeader()
+            );
             app.UseMvc();
-            app.UseCors("AllowAnyOrigin");
     }
     }
 }

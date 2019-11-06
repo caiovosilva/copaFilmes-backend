@@ -22,7 +22,6 @@ namespace LambdaCopaFilmesWebAPI.Controllers
         }
 
         [HttpGet]
-        [EnableCors("AllowAnyOrigin")]
         public async Task <IEnumerable<Movie>> GetAllMoviesAsync()
         {
             var result = await this.movieService.GetMoviesAsync();

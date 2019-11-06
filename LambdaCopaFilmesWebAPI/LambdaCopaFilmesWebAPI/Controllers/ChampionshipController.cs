@@ -22,7 +22,6 @@ namespace LambdaCopaFilmesWebAPI.Controllers
         }
 
         [HttpPost]
-        [EnableCors("AllowAnyOrigin")]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public ActionResult<IEnumerable<Movie>> RunChampionship([FromBody] List<Movie> movies)
