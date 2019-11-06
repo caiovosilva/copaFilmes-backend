@@ -49,7 +49,7 @@ namespace LambdaCopaFilmesWebAPI
 
             app.UseHttpsRedirection();
             app.UseCors(
-                options => options.WithOrigins("https://copa-filmes.netlify.com/").AllowAnyMethod().AllowAnyHeader()
+                options => options.WithOrigins("https://copa-filmes.netlify.com").AllowAnyMethod().AllowAnyHeader()
             );
             app.UseMvc();
     }
