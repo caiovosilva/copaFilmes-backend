@@ -37,6 +37,7 @@ namespace LambdaCopaFilmesWebAPI.Services
         {
             if (movies == null || movies.Count != 8)
                 return null;
+
             movies = movies.OrderBy(x => x.Titulo).ToList();
             int j = movies.Count - 1;
             Movie[] moviesArray = new Movie[4];
