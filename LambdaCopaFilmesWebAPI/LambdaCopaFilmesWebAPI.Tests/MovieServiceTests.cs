@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Xunit;
 using LambdaCopaFilmesWebAPI.Services;
 using LambdaCopaFilmesWebAPI.Domain.Services;
+using LambdaCopaFilmesWebAPI.Domain.Models;
 
 namespace LambdaCopaFilmesWebAPI.Tests
 {
@@ -19,11 +20,24 @@ namespace LambdaCopaFilmesWebAPI.Tests
 
 
         [Fact]
-        public void IsPrime_InputIs1_ReturnFalse()
+        public void RunChampionship_InputIsNull_ReturnNull()
         {
-            var result = this.MovieService.RunChampionship();
+            var result = this.MovieService.RunChampionship(null);
+            Assert.Null(result);
+        }
 
-            Assert.False(result, "1 should not be prime");
+        [Fact]
+        public void RunChampionship_InputDoNotHave8Items_ReturnNull()
+        {
+            List<Movie> movies = new List<Movie>()
+            {
+                new Movie(){ Id="tt3606756", Titulo="Os Incríveis 2", Ano=2018, Nota=8.5 },
+                new Movie(){ Id="tt36065", Titulo="Os Incríveis 3", Ano=2019, Nota=8.6 },
+                new Movie(){ Id="tt38756", Titulo="Os Incríveis 4", Ano=2020, Nota=8.7 }
+
+            };
+            var result = this.MovieService.RunChampionship(movies);
+            Assert.Null(result);
         }
     }
 }

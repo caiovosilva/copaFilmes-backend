@@ -7,6 +7,6 @@ namespace LambdaCopaFilmesWebAPI.Domain.Services
     public interface IMovieService
     {
         Task<IEnumerable<Movie>> GetMoviesAsync();
-        IEnumerable<Movie> RunChampionship(List<Movie> movies);
+        IEnumerable<Movie> RunChampionship(IList<Movie> movies);
     }
 }
