@@ -33,8 +33,11 @@ namespace LambdaCopaFilmesWebAPI.Services
             return movies;
         }
 
-        public IEnumerable<Movie> RunChampionship(List<Movie> movies)
+        public IEnumerable<Movie> RunChampionship(IList<Movie> movies)
         {
+            if (movies == null || movies.Count != 8)
+                return null;
+
             movies = movies.OrderBy(x => x.Titulo).ToList();
             int j = movies.Count - 1;
             Movie[] moviesArray = new Movie[4];
@@ -50,7 +53,7 @@ namespace LambdaCopaFilmesWebAPI.Services
                 Movie.Greater(moviesArray[2], moviesArray[3])
             };
 
-            if(Movie.Greater(moviesArray[0], moviesArray[1]).Id.Equals(moviesArray[1].Id))
+            if (Movie.Greater(moviesArray[0], moviesArray[1]).Id.Equals(moviesArray[1].Id))
             {
                 Movie movie = moviesArray[0];
                 moviesArray[0] = moviesArray[1];

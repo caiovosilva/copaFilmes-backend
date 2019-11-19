@@ -26,7 +26,7 @@ namespace LambdaCopaFilmesWebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public ActionResult<IEnumerable<Movie>> RunChampionship([FromBody] List<Movie> movies)
         {
-            if (movies.Count != 8)
+            if (movies == null || movies.Count != 8)
                 return BadRequest();
             var result = this.movieService.RunChampionship(movies);
             return Ok(result);
